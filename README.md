@@ -56,9 +56,18 @@ If you prefer to start with a completely clean database, just delete the music.d
 
 # Room for improvement
 
+### Genres
+
 The genres are a bit of a mess in their raw state.
 
 I think it would be useful to take genres such as "Country/Western" and split the entry into those two *separate* genres.  That would avoid getting divergent results for "Country" and "Country/Western."
 
 I also think that an adjustment should be made for the genre names that were clipped off by the formatting of the Music Office's website.  This may require a table of corrections; I don't know an algorithmic way to fix this.
 
+### Geolocation
+
+The city names are not a satisfying way to search by location.
+
+One idea is to have a table that maps each city name to a GPS location (that can be mapped or used in a distance calculation).  A tool could be built to find bands in a certain genre within a certain distance.
+
+An alternate approach would map city names to general regions of the state.
