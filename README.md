@@ -12,9 +12,9 @@ Yes.  The raw scrape produced by my first run of this scraper on October 15, 201
 
 It's a SQLite3 file, with tables created in a Rails-friendly format.
 
-Bands have their name, each URL they have given (such as a myspace page or facebook page), their contact information (a phone number), and the genres that they listed on their own forms.
+Bands have their name, each URL they have given (such as a myspace page or facebook page), their contact information (a phone number), and the genres that they chose to list.
 
-There are 8255 bands listed, with 11,680 URLs falling into 263 genres.
+There are 8255 bands listed, with 11,680 URLs, falling into 263 genres.
 
 I stored the genre information in the classic way that tags are stored.  There is a separate database table for "Genre" and for "BandGenres".  Each different genre name has a unique entry in the Genre table, and each band in that genre has an entry in BandGenre that connects the dots between the band and that genre.  This permits easy searching by Genre, and (like tags) it would permit a user to rapidly tunnel down by Genre.
 
