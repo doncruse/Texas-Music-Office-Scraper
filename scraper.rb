@@ -2,7 +2,8 @@ require 'rubygems'
 require 'open-uri'
 require 'hpricot'
 require 'nokogiri'
-# require 'active_record'
+
+## Note: I have temporarily commented out the lines that would "destroy" entries for genres or links that have been removed from the database.  This is because the duplication in the source database was causing problems.  Because the Texas Music Office listed some bands twice with slightly different genres, this was deleting some valuable information from the database.
 
 require 'database-init'
 
@@ -75,12 +76,19 @@ urls_to_hit.each do |band_page_url|
     
     # 2. clean out genres that have been removed from the database
 
+    ## FIXME: For now, I am disabling the .destroy calls here because
+    ## this is the first pass through the data & I have seen at least
+    ## one error that appears to be a result
+
+=begin
     existing_genres.each do |existing|
       next if genres.include?(existing.name)
-      existing.destroy
-        # should be operating on the BandGenre model
+      current_genre_assignment = BandGenre.find_by_band_id_and_genre_id(band_in_database.id, existing.id)
+      current_genre_assignment.destroy
+      # FIXME: add code to delete the Genre itself if and only if it now has not valid links to bands
     end
-
+=end
+    
     # For band links, sync to the database
     existing_band_links = band_in_database.band_links
 
@@ -91,12 +99,16 @@ urls_to_hit.each do |band_page_url|
       end
     end
 
+    # This is also being commented out until a more elegant way is found
+    # to deal with duplication in the source database.
+=begin
     unless existing_band_links.nil?
       existing_band_links.each do |old_link|
         next if band_links.include?(old_link.url)
         old_link.destroy
       end
     end
+=end
     puts band_in_database.name
 
   end
